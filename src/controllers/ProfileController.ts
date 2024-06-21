@@ -6,7 +6,7 @@ import { Connection } from 'typeorm';
 import { User } from '../entities/User';
 import { Follow } from '../entities/Follow';
 import UserRepository from '../repositories/UserRepository';
-import AuthenticationMiddleware from '../middleware/AuthenticationMiddleware';
+import AuthenticationMiddleware, { OptionalAuthenticationMiddleware } from '../middleware/AuthenticationMiddleware';
 import FollowRepository from '../repositories/FollowRepository';
 
 @route('/api/profiles')
@@ -22,7 +22,7 @@ export default class ProfileController {
 
 	@route('/:username')
 	@GET()
-	@before([inject(AuthenticationMiddleware)])
+	@before([inject(OptionalAuthenticationMiddleware)])
 	async getProfile(ctx: Context) {
 		const user: User | undefined = await this._userRepository.findOne({ username: ctx.params.username });
 

@@ -219,7 +219,7 @@ export default class ArticleController {
 
 	@route('/:slug')
 	@GET()
-	@before([inject(AuthenticationMiddleware)])
+	@before([inject(OptionalAuthenticationMiddleware)])
 	async getArticle(ctx: Context) {
 		const article: Article | undefined = await this._articleRepository.findOne({
 			relations: ['tagList', 'author', 'favorites'],
@@ -289,7 +289,7 @@ export default class ArticleController {
 
 	@route('/:slug/comments')
 	@GET()
-	@before([inject(AuthenticationMiddleware)])
+	@before([inject(OptionalAuthenticationMiddleware)])
 	async getComments(ctx: Context) {
 		const article: Article | undefined = await this._articleRepository.findOne({ slug: ctx.params.slug });
 
